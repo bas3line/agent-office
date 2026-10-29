@@ -6,7 +6,7 @@
  * no copy, and only ever sees a short preview from the server.
  */
 import type { InstallPlan, KeyInfo, LoginFlow, ProviderStatus, SandboxInfo } from "../../../src/shared/control.ts";
-import { BRAND, type AgentKind } from "../../../src/shared/events.ts";
+import { BRAND, WATCH_ONLY_AGENTS, type AgentKind } from "../../../src/shared/events.ts";
 import { h, setText } from "../dom.ts";
 import { ago } from "../format.ts";
 import { glyph, icon } from "../icons.ts";
@@ -26,7 +26,7 @@ export interface SettingsDrawer {
   sync(): void;
 }
 
-const AGENTS = Object.keys(BRAND) as AgentKind[];
+const AGENTS = (Object.keys(BRAND) as AgentKind[]).filter((a) => !WATCH_ONLY_AGENTS.includes(a));
 const TABS: [SettingsTab, string, Parameters<typeof icon>[0]][] = [
   ["logins", "Logins", "lock"],
   ["keys", "Keys", "key"],

@@ -39,6 +39,7 @@ export const GLYPH: Record<AgentKind, string> = {
   gemini: "✦",
   qwen: "◈",
   cursor: "◭",
+  hermes: "☤",
 };
 
 export function agentLabel(a: AgentKind, width = 0): string {

@@ -53,6 +53,7 @@ const BINARIES: Record<string, AgentKind> = {
   gemini: "gemini",
   qwen: "qwen",
   "cursor-agent": "cursor",
+  hermes: "hermes",
 };
 
 /** Package paths of agents that run as a script under a JS runtime. */

@@ -14,7 +14,8 @@ export type AgentKind =
   | "droid"   // Factory
   | "gemini"
   | "qwen"
-  | "cursor"; // cursor-agent CLI
+  | "cursor"   // cursor-agent CLI
+  | "hermes";  // Hermes Agent (read-only SQLite)
 
 /** Where a worker is running. Local sessions omit `host` on events. */
 export type HostKind = "local" | "ssh" | "daytona" | "boat" | "railway" | "vercel";
@@ -169,7 +170,11 @@ export const BRAND: Record<AgentKind, { name: string; color: string; ink: string
   gemini: { name: "Gemini CLI", color: "#8E75FF", ink: "#0B0B14" },
   qwen: { name: "Qwen Code", color: "#615CED", ink: "#0B0B14" },
   cursor: { name: "Cursor", color: "#EDECEC", ink: "#0A0A0A" },
+  hermes: { name: "Hermes", color: "#F5C542", ink: "#0B0B0B" },
 };
+
+/** Agents the office watches but cannot hire: no control-plane launcher. */
+export const WATCH_ONLY_AGENTS: readonly AgentKind[] = ["hermes"];
 
 export const HOST_BRAND: Record<Exclude<HostKind, "local">, { name: string; color: string }> = {
   ssh: { name: "SSH", color: "#9AA4B2" },

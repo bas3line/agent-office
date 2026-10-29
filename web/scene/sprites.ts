@@ -685,6 +685,35 @@ const TORSO: Record<AgentKind, Record<"down" | "up" | "side", string[]>> = {
       ".....OOOOOOOO...",
     ],
   },
+  hermes: {
+    down: [
+      "....opwSSwpo....",
+      "....oopwwzoo....",
+      "....ooowwzlo....",
+      "....ooowwzoo....",
+      "....ooowwzoo....",
+      "....oOOwwzOo....",
+      "....OOOOOOOO....",
+    ],
+    up: [
+      "....oopppooo....",
+      "....oooooooo....",
+      "....oooooooo....",
+      "....oooooooo....",
+      "....oooooooo....",
+      "....oooooooo....",
+      "....OOOOOOOO....",
+    ],
+    side: [
+      ".....oopSwo.....",
+      ".....oooooww....",
+      ".....oooooozl...",
+      ".....oooooooo...",
+      ".....oooooooo...",
+      ".....oOOOOOoo...",
+      ".....OOOOOOOO...",
+    ],
+  },
 };
 const TORSO_Y = 11;
 

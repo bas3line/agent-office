@@ -9,7 +9,7 @@
  * through src/control/types.ts.
  */
 import type { IncomingMessage, ServerResponse } from "node:http";
-import type { AgentKind } from "../shared/events.ts";
+import { WATCH_ONLY_AGENTS, type AgentKind } from "../shared/events.ts";
 import type {
   ApprovalAnswer, ControlInfo, ControlMode, HireRequest, PermissionMode, Place, PlaceKind, ServiceStatus, SetupChoice, SetupLoginKind,
 } from "../shared/control.ts";
@@ -32,7 +32,7 @@ const PING_MS = 15_000;
 const HIRES_PER_MINUTE = 10;
 /** How long GET /api/control waits for a platform it has no row for yet (then: its login state, and the row follows). */
 export const INFO_PLACES_MS = 400;
-const AGENTS = Object.keys(AGENT_FACTS) as AgentKind[];
+const AGENTS = (Object.keys(AGENT_FACTS) as AgentKind[]).filter((a) => !WATCH_ONLY_AGENTS.includes(a));
 const PLACES: PlaceKind[] = ["local", "ssh", "daytona", "vercel", "railway"];
 const MODES: ControlMode[] = ["terminal", "chat"];
 const PERMISSIONS: PermissionMode[] = ["default", "acceptEdits", "plan", "bypass"];

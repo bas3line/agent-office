@@ -6,7 +6,7 @@
  * the lift and the session panel opens.
  */
 import type { AgentAvailability, ControlMode, ControlSession, FsListing, HireRequest, PermissionMode, Place, ProviderStatus, SandboxInfo } from "../../../src/shared/control.ts";
-import { BRAND, type AgentKind } from "../../../src/shared/events.ts";
+import { BRAND, WATCH_ONLY_AGENTS, type AgentKind } from "../../../src/shared/events.ts";
 import { h, setText } from "../dom.ts";
 import { tidyPath } from "../format.ts";
 import { glyph, icon } from "../icons.ts";
@@ -30,7 +30,7 @@ export interface HireDialog {
 
 type Where = "local" | "sandbox" | "ssh";
 type Provider = "daytona" | "vercel" | "railway";
-const AGENTS = Object.keys(BRAND) as AgentKind[];
+const AGENTS = (Object.keys(BRAND) as AgentKind[]).filter((a) => !WATCH_ONLY_AGENTS.includes(a));
 const PROVIDERS: Provider[] = ["daytona", "vercel", "railway"];
 const TIMEOUTS = [15, 30, 60, 120];
 const HEADLESS: AgentKind[] = ["claude", "codex", "opencode"];

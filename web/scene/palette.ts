@@ -289,6 +289,14 @@ export const BRAND_ART: Record<AgentKind, BrandArt> = {
     kbd: [C.cu3, C.cu6, C.cu9], led: C.cu9, bezel: C.cu0,
     laptop: [C.cu0, C.cu6, C.cu3], plate: C.cu0,
   },
+  hermes: {
+    // gold on deep plum, a caduceus mark
+    main: C.gold3, dark: C.gold2, deep: C.gold1, light: C.gold4, pale: C.gold4, mark: C.ink, ink: C.gold3,
+    rug: [C.plum1, C.gold3, mix(C.plum1, C.gold2, 0.5)], pattern: "sparkle",
+    ...slateDesk, trim: C.gold3,
+    chair: [C.ink3, C.gold3], stool: C.gold2,
+    kbd: [C.slate3, C.slate4, C.gold3], led: C.gold3,
+  },
 };
 
 /** Remote hosts: server-room desks in the cloud wing, lit in the host colour. */

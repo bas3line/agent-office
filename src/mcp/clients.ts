@@ -8,7 +8,7 @@
 import type { AgentKind } from "../shared/events.ts";
 
 export const AGENT_KINDS: readonly AgentKind[] = [
-  "claude", "commandcode", "codex", "opencode", "droid", "gemini", "qwen", "cursor",
+  "claude", "commandcode", "codex", "opencode", "droid", "gemini", "qwen", "cursor", "hermes",
 ];
 
 /** Ordered: the first pattern that matches the normalized name wins. */

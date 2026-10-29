@@ -17,6 +17,7 @@ import droidSvg from "../../assets/logos/droid.svg";
 import geminiSvg from "../../assets/logos/gemini.svg";
 import qwenSvg from "../../assets/logos/qwen.svg";
 import cursorSvg from "../../assets/logos/cursor.svg";
+import hermesSvg from "../../assets/logos/hermes.svg";
 import daytonaSvg from "../../assets/logos/daytona.svg";
 import boatSvg from "../../assets/logos/boat.svg";
 import railwaySvg from "../../assets/logos/railway.svg";
@@ -67,7 +68,7 @@ const SSH_GLYPH = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" f
 
 const SVGS: Record<LogoKind, string> = {
   claude: claudeSvg, commandcode: commandcodeSvg, codex: codexSvg, opencode: opencodeSvg, droid: droidSvg,
-  gemini: geminiSvg, qwen: qwenSvg, cursor: cursorSvg,
+  gemini: geminiSvg, qwen: qwenSvg, cursor: cursorSvg, hermes: hermesSvg,
   ssh: SSH_GLYPH, daytona: daytonaSvg, boat: boatSvg, railway: railwaySvg, vercel: vercelSvg,
 };
 const marks = new Map<LogoKind, Mark>();

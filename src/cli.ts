@@ -56,6 +56,7 @@ const GLYPH: Record<AgentKind, string> = {
   gemini: "✦",
   qwen: "◈",
   cursor: "◭",
+  hermes: "☤",
 };
 
 interface Options {

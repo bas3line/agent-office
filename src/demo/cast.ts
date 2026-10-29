@@ -257,6 +257,14 @@ export const TOOLSETS: Record<AgentKind, Toolset> = {
     web: ["web_search"],
     todoSummary: "Update todos",
   },
+  hermes: {
+    tools: {
+      read: "read_file", edit: "patch", write: "patch", bash: "terminal", search: "search_files",
+      glob: "glob", web: "web_fetch", agent: "delegate_task", todo: "todo",
+    },
+    web: ["web_fetch"],
+    todoSummary: "Update todos",
+  },
 };
 
 export const MODELS: Record<AgentKind, string[]> = {
@@ -268,6 +276,7 @@ export const MODELS: Record<AgentKind, string[]> = {
   gemini: ["gemini-3-pro", "gemini-3-flash"],
   qwen: ["qwen3.5-coder-plus", "qwen3-coder-flash"],
   cursor: ["composer-2", "claude-sonnet-5-5"],
+  hermes: ["deepseek/deepseek-v4.1-flash"],
 };
 
 /** MCP calls as [server, tool]; summaries read "github.get_issue". */

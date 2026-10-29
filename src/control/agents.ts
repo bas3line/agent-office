@@ -12,12 +12,12 @@
  */
 import { spawn } from "node:child_process";
 import { realpathSync } from "node:fs";
-import type { AgentKind } from "../shared/events.ts";
+import { WATCH_ONLY_AGENTS, type AgentKind } from "../shared/events.ts";
 import type { AgentAvailability, ControlMode, PermissionMode } from "../shared/control.ts";
 import { which } from "../remote/util.ts";
 import { AGENT_FACTS, type Launch, type PermissionFlags, type PtyBackend, type TermDrive } from "./types.ts";
 
-export const AGENTS = Object.keys(AGENT_FACTS) as AgentKind[];
+export const AGENTS = (Object.keys(AGENT_FACTS) as AgentKind[]).filter((a) => !WATCH_ONLY_AGENTS.includes(a));
 export const ALL_PERMISSIONS: PermissionMode[] = ["default", "acceptEdits", "plan", "bypass"];
 
 /** Paste, then Enter this much later: sooner and Claude's TUI takes the Enter as a newline in the paste. */
@@ -60,6 +60,7 @@ export const PERMISSION_FLAGS: Record<AgentKind, PermissionFlags> = {
     bypass: ["--approval-mode", "yolo"],
   },
   cursor: { default: [], bypass: ["--force"] },
+  hermes: {},
 };
 
 /**

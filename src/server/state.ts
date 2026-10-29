@@ -34,13 +34,14 @@ import {
   type Snapshot,
   type ToolCategory,
   type WorkerState,
+  WATCH_ONLY_AGENTS,
 } from "../shared/events.ts";
 
 export const RECENT_MAX = 200;
 /** How long an intern lingers after subagent_end so the client can walk it out. */
 export const INTERN_GRACE_MS = 6_000;
 
-const AGENTS = new Set<AgentKind>(["claude", "commandcode", "codex", "opencode", "droid", "gemini", "qwen", "cursor"]);
+const AGENTS = new Set<AgentKind>(["claude", "commandcode", "codex", "opencode", "droid", "gemini", "qwen", "cursor", "hermes"]);
 const HOSTS = new Set<HostKind>(["local", "ssh", "daytona", "boat", "railway", "vercel"]);
 const KINDS = new Set<EventKind>([
   "session_start", "prompt", "thinking", "tool_start", "tool_end", "reply", "waiting",
@@ -61,6 +62,8 @@ const CATEGORIES = new Set<ToolCategory>([
 const SUPERVISE_MS = 5 * 60_000;
 /** A local session with no agent process left goes home once it has been quiet this long. */
 export const PRESENCE_QUIET_MS = 15_000;
+/** Agents with no process the scan can see: reconcileLocal must never count them out. */
+const WATCH_ONLY = new Set<AgentKind>(WATCH_ONLY_AGENTS);
 /** Events that only describe an existing worker; never create one. */
 const ENDINGS = new Set<EventKind>(["session_end", "subagent_end", "idle"]);
 /** After end(), that worker's transcript events are dropped this long. */
@@ -283,7 +286,9 @@ export class OfficeState {
    * office keeps as many sessions as there are running processes (the most
    * recently active ones) and ends the rest once they have been quiet for
    * PRESENCE_QUIET_MS. Remote workers are left to the quiet timer, held and
-   * placeholder workers to their process. A process whose cwd couldn't be
+   * placeholder workers to their process, and watch-only agents (Hermes) too:
+   * their process is not one the scan can see, so counting would end every
+   * session the moment it goes quiet. A process whose cwd couldn't be
    * read (cwd null or empty) makes this round skip its agent entirely, since
    * it may well be the one keeping a session alive.
    */
@@ -305,6 +310,7 @@ export class OfficeState {
       const s = w.state;
       if (s.parentId || s.host || !s.cwd || w.removeAt !== undefined) continue;
       if (blind.has(s.agent) || this.holds.has(s.workerId) || isPlaceholder(s.workerId)) continue;
+      if (WATCH_ONLY.has(s.agent)) continue;
       const k = key(s.agent, s.cwd);
       const g = groups.get(k);
       if (g) g.push(w);

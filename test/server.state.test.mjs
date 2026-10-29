@@ -247,6 +247,26 @@ test("local sessions whose agent quit go home; running ones and remotes stay", (
   assert.deepEqual(state.sessions().map((w) => w.workerId).sort(), ["r1"], "with no processes left only the remote worker stays");
 });
 
+test("a watch-only agent (Hermes) is never counted out; only the quiet timer sends it home", () => {
+  const { state, seen, ev, advance } = office();
+  const hermes = (id, over = {}) =>
+    ev({ workerId: id, agent: "hermes", project: "hermes", cwd: "/Users/test/.hermes", kind: "prompt", ...over });
+  state.ingest({ ...hermes("h1"), kind: "session_start" });
+  state.ingest(hermes("h1"));
+  state.ingest({ ...hermes("h1-sub"), parentId: "h1", role: "Explore", kind: "subagent_start" });
+  state.ingest(hermes("h1-sub", { parentId: "h1", kind: "tool_start", tool: "Read", category: "read" }));
+  state.ingest(ev({ workerId: "c1", agent: "claude", project: "site", cwd: "/Users/test/Codes/site", kind: "session_start" }));
+  advance(PRESENCE_QUIET_MS + 1);
+  seen.length = 0;
+  state.reconcileLocal([]);
+  assert.ok(state.has("h1"), "Hermes has no process the scan can see, so it must not be counted out");
+  assert.ok(state.has("h1-sub"), "nor its interns");
+  assert.deepEqual(seen.map((e) => [e.kind, e.workerId]), [["session_end", "c1"]], "agents with a process still reconcile");
+  advance(GONE_MS);
+  assert.deepEqual(seen.filter((e) => e.workerId === "h1").map((e) => e.kind), ["session_end"]);
+  assert.ok(!state.has("h1-sub"), "the quiet timer is what ends it, interns included");
+});
+
 test("session_end after GONE_MS removes the worker and its interns", () => {
   const { state, seen, ev, advance } = office();
   state.ingest(ev({ kind: "session_start" }));

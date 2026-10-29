@@ -176,7 +176,8 @@ function selectAgents(opts: RunOptions, detections: Map<AgentKind, Detection>, o
   if (opts.agents?.length) {
     const picked: Adapter[] = [];
     for (const id of opts.agents) {
-      const a = ADAPTERS.find((x) => x.id === id)!;
+      const a = ADAPTERS.find((x) => x.id === id);
+      if (!a) continue;
       if (detections.get(id)!.installed || also?.(a)) picked.push(a);
       else {
         const why = [...a.bins.map((b) => `no ${b} on PATH`)].slice(0, 1).join(", ");

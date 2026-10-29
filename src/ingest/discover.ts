@@ -94,6 +94,8 @@ export function agentRoots(agent: AgentKind, env: SourceEnv, local = true): stri
       // Under macOS sandbox-exec the CLI keeps its runtime state in ~/.cache/.gemini.
       return [join2(gh, ".gemini", "tmp"), join2(home, ".cache", ".gemini", "tmp")];
     }
+    case "hermes":
+      return [hermesDb(env, local)];
     case "opencode":
       return [opencodeDb(env, local)];
   }
@@ -104,6 +106,13 @@ export function opencodeDb(env: SourceEnv, local = true): string {
   const x = local ? env.vars.AGENT_OFFICE_OPENCODE_DIR : undefined;
   if (x) return x.endsWith(".db") ? x : join2(x, "opencode.db");
   return join2(env.vars.XDG_DATA_HOME || join2(env.home, ".local", "share"), "opencode", "opencode.db");
+}
+
+/** Hermes keeps everything in one SQLite file under $HERMES_HOME (default ~/.hermes). */
+export function hermesDb(env: SourceEnv, local = true): string {
+  const x = local ? env.vars.AGENT_OFFICE_HERMES_DIR : undefined;
+  if (x) return x.endsWith(".db") ? x : join2(x, "state.db");
+  return join2(env.vars.HERMES_HOME || join2(env.home, ".hermes"), "state.db");
 }
 
 /** Where the agentoffice MCP server drops AgentSignals. */

@@ -113,6 +113,7 @@ One pod per project: two agents on the same repo share it, each desk in its own 
 | <img src="docs/logos/droid.svg" width="18"> | **Droid** (Factory) | `~/.factory/sessions` | tested |
 | <img src="docs/logos/qwen.svg" width="18"> | **Qwen Code** | `~/.qwen/projects` | tested |
 | <img src="docs/logos/gemini.svg" width="18"> | **Gemini CLI** | `~/.gemini/tmp/*/chats` | built from gemini-cli's recorder source, untested on real data |
+| <img src="docs/logos/hermes.svg" width="18"> | **Hermes Agent** | `~/.hermes/state.db` (or `$HERMES_HOME`), read-only SQLite, subagent sessions included | tested; watched only, the control plane cannot hire it |
 
 "Tested" means checked against real transcripts on a real machine, every file, with zero crashes and zero prompt text in any label. Formats drift between versions: if your agent stops showing up, [open an issue](https://github.com/bas3line/agent-office/issues/new/choose) with its version. Want another agent? [CONTRIBUTING.md](CONTRIBUTING.md#add-an-agent) shows how to add one.
 

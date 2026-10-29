@@ -192,6 +192,12 @@ export const AGENT_FACTS: Record<AgentKind, AgentFacts> = {
     installCmd: "curl https://cursor.com/install -fsS | bash",
     keyNames: ["CURSOR_API_KEY"],
   },
+  hermes: {
+    // Watched through its own SQLite; the control plane cannot launch it.
+    bins: [],
+    installCmd: "",
+    keyNames: [],
+  },
 };
 
 /* -------------------------------------------------------------- context */

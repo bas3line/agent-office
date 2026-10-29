@@ -38,6 +38,7 @@ const HOSTS: Host[] = [
 const MODELS: Record<AgentKind, string> = {
   claude: "claude-opus-5-5", commandcode: "cmd-1", codex: "gpt-5.6-sol", opencode: "deepseek/deepseek-v4-pro",
   droid: "droid-core", gemini: "gemini-3-pro", qwen: "qwen3.5-coder", cursor: "cursor-agent",
+  hermes: "deepseek/deepseek-v4.1-flash",
 };
 const ROLES = ["Explore", "general-purpose", "code-reviewer", "test-runner", "Plan"];
 const FILES = ["cli.ts", "server.ts", "index.ts", "scene.ts", "README.md", "auth.go", "main.py", "routes.ts", "db.sql", "style.css"];
